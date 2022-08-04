@@ -1,0 +1,56 @@
+<html>
+
+<head>
+
+    <title>Search Result</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<br/></br/>
+
+<div class="container">
+
+    <div class="col-md-8 offset-md-2">
+
+        {% if query %}
+
+        <div class="container">
+            <h2 class="text-center">Recommended books for input: {{query}}</h2><br>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Book title</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in results %}
+                <tr>
+                    <td>{{i.book_title}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% endif %}
+
+        <form action="{% url 'book_list' %}" class="form-inline" method="get">
+
+            <button type="submit" class="btn btn-primary btn-lg mb-2">Back</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+<html>
