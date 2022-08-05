@@ -2,8 +2,19 @@
 ## Table of contents
 * General info
 * Technologies
+
 ## General info
-## <img src="/illustration/application.PNG" />
+In ebdjango folder is django application and in recommendation_function folder is notebook application which contains additional graphs.
+
+On picture number one you can see scheme application and next pictures you can see django application (default and result pages).
+
+### Application diagram
+### <img src="/illustration/application.PNG"/>
+### Default page
+### <img src="/illustration/default_page.PNG"/>
+### Result page
+### <img src="/illustration/result_page.PNG"/>
+
 ## Technologies
 #### Project is created with:
 * Python version: 3.6.1
