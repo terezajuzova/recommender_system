@@ -1,9 +1,9 @@
 # Book recommender system
 ## Table of contents
 * General info
-## <img src="illustaration/application.png"/>
 * Technologies
 ## General info
+## <img src="/illustration/application.PNG" />
 ## Technologies
 #### Project is created with:
 * Python version: 3.6.1
