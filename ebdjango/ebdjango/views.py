@@ -27,24 +27,24 @@ def search(request):
         if search_input == '':
             search_input = 'None'
 
-        book = books.objects.values('book_title', 'book_isbn')
-        rating = book_ratings.objects.values('user_id', 'book_isbn', 'book_rating')
-        recommended_books = get_recommended_books(book, rating, search_input)
+        books_list = books.objects.values('book_title', 'book_isbn')
+        ratings = book_ratings.objects.values('user_id', 'book_isbn', 'book_rating')
+        recommended_books = get_recommended_books(books_list, ratings, search_input)
 
-    return render(request, 'search.html', {'query': search_input, 'results': recommended_books})
+    return render(request, 'search.html', {'search_input': search_input, 'results': recommended_books})
 
 
-def get_recommended_books(book, rating, search_input):
+def get_recommended_books(books_list, ratings, search_input):
 
-    list_of_books = list(book)
-    list_of_rating = list(rating)
+    list_of_books = list(books_list)
+    list_of_ratings = list(ratings)
 
-    df_book = pd.DataFrame(list_of_books)
-    df_rating = pd.DataFrame(list_of_rating)
+    df_books = pd.DataFrame(list_of_books)
+    df_ratings = pd.DataFrame(list_of_ratings)
 
 
     # Merge ratings and books datasets
-    df = pd.merge(df_rating, df_book, on='book_isbn', how='inner')
+    df = pd.merge(df_ratings, df_books, on='book_isbn', how='inner')
 
     # Aggregate by book
     agg_ratings = df.groupby('book_title')['book_rating'].agg([('mean_rating','mean'), ('number_of_ratings','count')]).reset_index()
@@ -57,12 +57,12 @@ def get_recommended_books(book, rating, search_input):
     matrix = df_100.pivot_table(index='user_id', columns='book_title', values='book_rating')
 
     # Now one book is chosen
-    book_ratings = matrix[search_input]
+    books_ratings = matrix[search_input]
 
     # Correlations between the others books
-    similar_book_ratings = matrix.corrwith(book_ratings)
+    similar_books_ratings = matrix.corrwith(books_ratings)
 
-    correlation = pd.DataFrame(similar_book_ratings, columns=['Correlation'])
+    correlation = pd.DataFrame(similar_books_ratings, columns=['Correlation'])
     correlation.dropna(inplace=True)
 
     # Result dataframe
